@@ -76,11 +76,11 @@ class GlobalConfigGenerator:
 
         return html
 
-    def create_tenant_config_file(self, tenant, common_config, specific_config, outputfile):
+    def create_tenant_config_file(self, tenant, common_config, specific_config, outputfile, schema={}):
         tenant_path = os.path.join(self.config_in_path, tenant)
         tenant_output_file = os.path.join(tenant_path, outputfile)
         # Merge two json files
-        merged_config = merge(common_config, specific_config)
+        merged_config = merge(common_config, specific_config, schema)
         # Creates dirs if not exists
         os.makedirs(tenant_path, exist_ok=True)
         # Write config
@@ -112,11 +112,16 @@ class GlobalConfigGenerator:
             if tenant:
                 common_cfggensrv_data = common_config.get('config-generator-service', {})
                 specific_cfggensrv_data = specific_config.get('config-generator-service', {})
+                cfggensrv_schema = self.merge_schema_for_config_generator()
                 # Add tenant info
                 specific_cfggensrv_data['config'] = specific_cfggensrv_data.get('config', {})
                 specific_cfggensrv_data['config'].update(tenant=tenant)
                 #Create qwc-config-generator file : tenantConfig.json
-                self.create_tenant_config_file(tenant, common_cfggensrv_data, specific_cfggensrv_data, 'tenantConfig.json')
+                self.create_tenant_config_file(tenant,
+                                               common_cfggensrv_data,
+                                               specific_cfggensrv_data,
+                                               'tenantConfig.json',
+                                               cfggensrv_schema)
 
                 common_qwc2config_data = common_config.get('qwc2config', {})
                 specific_qwc2config_data = specific_config.get('qwc2config', {})
@@ -150,4 +155,16 @@ class GlobalConfigGenerator:
         except Exception as e:
             msg = "unable to generate config file : %s" % str(e)
             self.logger.error(msg)
+
+    def merge_schema_for_config_generator(self):
+        schema = {
+            "properties": {
+                "services": {
+                    "mergeStrategy": "arrayMergeById",
+                    "mergeOptions": {"idRef": "name"}
+                }
+            }
+        }
+
+        return schema
 
