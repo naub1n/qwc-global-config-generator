@@ -2,7 +2,6 @@
   "$schema": "https://github.com/naub1n/qwc-global-config-generator/raw/master/schemas/qwc-global-config-generator.json",
   "service": "global-config-generator",
   "config": {
-    "output_config_path": "/srv/qwc_service/config-out",
     "config_generator_service_url": "http://qwc-config-service:9090"
   },
   "common_config": {

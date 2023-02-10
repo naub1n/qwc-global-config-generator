@@ -37,12 +37,6 @@ class GlobalConfigGenerator:
             global_generator_config = self.config.get('config', {})
             self.config_generator_service_url = global_generator_config.get('config_generator_service_url',
                                                                             'http://qwc-config-service:9090')
-            self.config_path = global_generator_config.get(
-                'output_config_path',
-                os.environ.get(
-                    'OUTPUT_CONFIG_PATH', '/tmp/'
-                )
-            )
 
     def get_logger(self):
         return self.logger
@@ -83,7 +77,7 @@ class GlobalConfigGenerator:
         return html
 
     def create_tenant_config_file(self, tenant, common_config, specific_config, outputfile):
-        tenant_path = os.path.join(self.config_path, tenant)
+        tenant_path = os.path.join(self.config_in_path, tenant)
         tenant_output_file = os.path.join(tenant_path, outputfile)
         # Merge two json files
         merged_config = merge(common_config, specific_config)
@@ -98,7 +92,7 @@ class GlobalConfigGenerator:
 
     def create_tenant_index_file(self, tenant):
         try:
-            tenant_path = os.path.join(self.config_path, tenant)
+            tenant_path = os.path.join(self.config_in_path, tenant)
             tenant_output_file = os.path.join(tenant_path, 'index.html')
             with open(tenant_output_file, 'w') as f:
                 f.write(self.html)
