@@ -111,8 +111,8 @@ class GlobalConfigGenerator:
             self.logger.error(msg)
 
     def write_configs(self):
-        specific_configs = self.config['specific_configs']
-        common_config = self.config['common_config']
+        specific_configs = self.config.get('specific_configs', [])
+        common_config = self.config.get('common_config', {})
         for specific_config in specific_configs:
             tenant = specific_config.get('tenant', '')
             if tenant:
@@ -150,7 +150,7 @@ class GlobalConfigGenerator:
                 msg = "Unable to generate service configurations for tenant '%s' : \n%s" % (tenant, str(response.text))
                 self.logger.error(msg)
             else:
-                msg = "Config file for tenant '%s' generated." % tenant
+                msg = "Config files and permissions generated for tenant '%s'." % tenant
                 self.logger.info(msg)
 
         except Exception as e:
