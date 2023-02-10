@@ -1,0 +1,37 @@
+{
+  "$schema": "https://github.com/naub1n/qwc-global-config-generator/raw/master/schemas/qwc-global-config-generator.json",
+  "service": "global-config-generator",
+  "config": {
+    "output_config_path": "/srv/qwc_service/config-out",
+    "config_generator_service_url": "http://qwc-config-service:9090"
+  },
+  "common_config": {
+    "config-generator-service": {
+      "config": {},
+      "themesConfig": {},
+      "custom_resource_types": [],
+      "services": []
+    },
+    "qwc2config": {
+      "searchServiceUrl": "http://localhost:5011/",
+      "searchDataServiceUrl": "http://localhost:5011/geom/",
+      "editServiceUrl": "http://localhost:5012/"
+    }
+  },
+  "specific_configs": [
+    {
+      "tenant": "default"
+    },
+    {
+      "tenant": "test",
+      "config-generator-service": {
+        "themesConfig": {
+          "defaultMapCrs": "EPSG:2154"
+        }
+      },
+      "qwc2config": {
+        "searchServiceUrl": "http://localhost:50020/"
+      }
+    }
+  ]
+}
