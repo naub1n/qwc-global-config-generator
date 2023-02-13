@@ -1,0 +1,27 @@
+{
+  "properties": {
+    "services": {
+      "mergeStrategy": "arrayMergeById",
+      "mergeOptions": {
+        "idRef": "name"
+      }
+    },
+    "themesConfig": {
+      "properties": {
+        "themes": {
+          "properties": {
+            "items": {
+              "mergeStrategy": "append"
+            }
+          }
+        },
+        "defaultBackgroundLayers": {
+          "mergeStrategy": "append"
+        },
+        "defaultSearchProviders": {
+          "mergeStrategy": "append"
+        }
+      }
+    }
+  }
+}
