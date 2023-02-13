@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/naub1n/qwc-global-config-generator/raw/master/schemas/qwc-global-config-generator.json",
+  "title": "QWC Global config generator",
+  "type": "object",
+  "properties": {
+    "$schema": {
+      "title": "JSON Schema",
+      "description": "Reference to JSON schema of this config",
+      "type": "string",
+      "format": "uri",
+      "default": "https://github.com/naub1n/qwc-global-config-generator/raw/master/schemas/qwc-global-config-generator.json"
+    },
+    "config": {
+      "title": "Config options for Global config generator",
+      "type": "object",
+      "properties": {
+        "config_generator_service_url": {
+          "title": "Config generator service URL",
+          "type": "string"
+        }
+      }
+    },
+    "common_config": {
+      "title": "Common configurations",
+      "description": "Common configurations for all tenants",
+      "type": "object",
+      "properties": {
+        "config-generator-service": {
+          "type": "object"
+        },
+        "qwc2config": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "config-generator-service",
+        "qwc2config"
+      ]
+    },
+    "specific_configs": {
+      "title": "Specific configurations",
+      "description": "Specific configurations for each tenant",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "tenant": {
+            "type": "string"
+          },
+          "config-generator-service": {
+            "type": "object"
+          },
+          "qwc2config": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "tenant"
+        ]
+      }
+    }
+  }
+}
