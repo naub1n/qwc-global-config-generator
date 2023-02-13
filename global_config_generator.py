@@ -2,6 +2,7 @@ import os
 import json
 import urllib
 import requests
+import jsonschema
 
 from collections import OrderedDict
 from jsonmerge import Merger
@@ -36,6 +37,7 @@ class GlobalConfigGenerator:
         self.html = self.read_index_html()
 
         if self.config:
+            self.validate_config(self.config)
             global_generator_config = self.config.get('config', {})
             self.config_generator_service_url = global_generator_config.get('config_generator_service_url',
                                                                             'http://qwc-config-service:9090')
@@ -63,6 +65,39 @@ class GlobalConfigGenerator:
             msg = "Error loading GlobalConfigGenerator config:\n%s" % e
             self.logger.error(msg)
             return
+
+    def validate_config(self, config_data):
+        schema_url = config_data.get('$schema', '')
+        if schema_url:
+            try:
+                r = requests.get(schema_url,
+                                 headers={'Accept': 'application/json'})
+                schema = r.json()
+
+            except Exception as e:
+                msg = "Unable to read schema url : %s" % str(e)
+                self.logger.error(msg)
+                return False
+
+            if schema:
+                try:
+                    jsonschema.validate(config_data, schema)
+                    self.logger.debug("Service configuration validated.")
+                    return True
+
+                except Exception as valid_err:
+                    msg = "json file not valid:\n%s" % str(valid_err)
+                    self.logger.error(msg)
+                    return False
+
+            else:
+                self.logger.warn("Validation schema is empty - Validation ignored.")
+                return True
+
+        else:
+            self.logger.warn("Validation schema not defined - Validation ignored.")
+            return True
+
 
     def read_index_html(self):
         if not os.path.exists(self.index_file):
