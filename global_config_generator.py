@@ -173,7 +173,7 @@ class GlobalConfigGenerator:
             self.logger.error(msg)
 
     def merge_schema_for_config_generator(self):
-        schema_file = os.path.join(self.root_dir, 'merge_schema_for_config_generator.json')
+        schema_file = os.path.join(self.root_dir, 'schemas/merge_schema_for_config_generator.json')
         try:
             with open(schema_file, encoding='utf-8') as f:
                 # parse config JSON with original order of keys
@@ -194,7 +194,7 @@ class GlobalConfigGenerator:
         return schema
 
     def merge_schema_for_qwc2_config(self):
-        schema_file = os.path.join(self.root_dir, 'merge_schema_for_qwc2_config.json')
+        schema_file = os.path.join(self.root_dir, 'schemas/merge_schema_for_qwc2_config.json')
         try:
             with open(schema_file, encoding='utf-8') as f:
                 # parse config JSON with original order of keys
