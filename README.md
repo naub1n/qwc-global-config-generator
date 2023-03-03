@@ -107,7 +107,7 @@ What should I do ?
 1. Create a `globalConfig.json` file in root of `config-in` directory.
    1. Add data to `common_config` key. 
       1. Add data to `config-generator-service` key.
-Read [qwc-config-generator-service description](https://github.com/qwc-services/qwc-config-generator/blob/master/README.md) to see all data which can be added.
+</br>Read [qwc-config-generator-service description](https://github.com/qwc-services/qwc-config-generator/blob/master/README.md) to see all data which can be added.
 
       2. Add data to `qwc2config` key
 </br>Read [QWC2 application configuration description](https://github.com/qgis/qwc2-demo-app/blob/master/doc/src/qwc_configuration.md#application-configuration-the-configjson-and-jsappconfigjs-files) and [config.json](https://github.com/qwc-services/qwc-docker/blob/master/volumes/config-in/default/config.json) file to see all data which can be added.
