@@ -67,19 +67,21 @@ What GlobalConfigGenerator do ?
 -----
 
 ### GlobalConfigGenerator steps to create `tenantConfig.json`
-1. GlobalConfigGenerator read each `tenant` in `specific_configs` key.
-2. For each tenant GlobalConfigGenerator take data of `config-generator-service` sub-key in `common_config` key.
+1. GlobalConfigGenerator read each `tenant` name in `specific_configs` key.
+2. GlobalConfigGenerator take data of `config-generator-service` sub-key in `common_config` key.
 3. For each tenant GlobalConfigGenerator read data of `config-generator-service` sub-key in `specific_configs` key.
-4. GlobalConfigGenerator export `tenantConfig.json` file in tenant directory.
+4. GlobalConfigGenerator apply merge strategy for each similar keys between `common_config` key and `specific_configs` key
+5. GlobalConfigGenerator export `tenantConfig.json` file in tenant directory.
 
 ### GlobalConfigGenerator steps to create QWC2 `config.json`
-1. GlobalConfigGenerator read each `tenant` in `specific_configs` key.
-2. For each tenant GlobalConfigGenerator take data of `qwc2config` sub-key in `common_config` key.
+1. GlobalConfigGenerator read each `tenant` name in `specific_configs` key.
+2. GlobalConfigGenerator take data of `qwc2config` sub-key in `common_config` key.
 3. For each tenant GlobalConfigGenerator read data of `qwc2config` sub-key in `specific_configs` key.
-4. GlobalConfigGenerator export `config.json` file in tenant directory.
+4. GlobalConfigGenerator apply merge strategy for each similar keys between `common_config` key and `specific_configs` key
+5. GlobalConfigGenerator export `config.json` file in tenant directory.
 
 ### GlobalConfigGenerator steps to create QWC2 `index.html`
-1. GlobalConfigGenerator read each `tenant` in `specific_configs` key. 
+1. GlobalConfigGenerator read each `tenant` name in `specific_configs` key. 
 2. GlobalConfigGenerator read and copy `index.html` in each tenant directory
 
 ### GlobalConfigGenerator rules
