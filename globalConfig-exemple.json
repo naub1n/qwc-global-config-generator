@@ -6,9 +6,18 @@
   },
   "common_config": {
     "config-generator-service": {
-      "config": {},
+      "$schema": "https://github.com/qwc-services/qwc-config-generator/raw/master/schemas/qwc-config-generator.json",
+      "service": "config-generator",
+      "config": {
+        "default_qgis_server_url": "http://qwc-qgis-server/ows/",
+        "config_db_url": "postgresql:///?service=qwc_configdb",
+        "permissions_default_allow": true,
+        "qgis_projects_base_dir": "/data/default",
+        "qgis_projects_scan_base_dir": "/data/default/scan",
+        "qgis_projects_gen_base_dir": "/data/default/gen",
+        "qwc2_base_dir": "/qwc2"
+      },
       "themesConfig": {},
-      "custom_resource_types": [],
       "services": []
     },
     "qwc2config": {
