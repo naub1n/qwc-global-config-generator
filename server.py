@@ -16,7 +16,7 @@ config_in_path = os.environ.get(
 # routes
 @app.route("/generate_configs", methods=['POST'])
 def generate_configs():
-    """Generate all service configs"""
+    """Generate all tenant configs"""
     log_output = ""
     try:
         generator = GlobalConfigGenerator(config_in_path, app.logger)
