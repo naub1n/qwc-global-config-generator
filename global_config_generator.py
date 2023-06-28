@@ -122,7 +122,6 @@ class GlobalConfigGenerator:
         # Merge two json files
         merger = Merger(schema)
         merged_config = merger.merge(common_config, specific_config)
-        self.logger.debug(merger.get_schema())
         # Creates dirs if not exists
         os.makedirs(tenant_path, exist_ok=True)
         # Write config
@@ -150,12 +149,11 @@ class GlobalConfigGenerator:
         if self.config and self.html:
             specific_configs = self.config.get('specific_configs', [])
             common_config = self.config.get('common_config', {})
-            merge_schema_cfggensrv = self.merge_schema_for_config_generator()
-            merge_schema_qwc2cfg = self.merge_schema_for_qwc2_config()
+            common_cfggensrv_data = common_config.get('config-generator-service', {})
+            common_qwc2config_data = common_config.get('qwc2config', {})
             for specific_config in specific_configs:
                 tenant = specific_config.get('tenant', '')
                 if tenant:
-                    common_cfggensrv_data = common_config.get('config-generator-service', {})
                     specific_cfggensrv_data = specific_config.get('config-generator-service', {})
                     # Add tenant info
                     specific_cfggensrv_data['config'] = specific_cfggensrv_data.get('config', {})
@@ -165,16 +163,15 @@ class GlobalConfigGenerator:
                                                    common_cfggensrv_data,
                                                    specific_cfggensrv_data,
                                                    'tenantConfig.json',
-                                                   merge_schema_cfggensrv)
+                                                   self.merge_schema_for_config_generator())
 
-                    common_qwc2config_data = common_config.get('qwc2config', {})
                     specific_qwc2config_data = specific_config.get('qwc2config', {})
                     # Create qwc2 file : config.json
                     self.create_tenant_config_file(tenant,
                                                    common_qwc2config_data,
                                                    specific_qwc2config_data,
                                                    'config.json',
-                                                   merge_schema_qwc2cfg)
+                                                   self.merge_schema_for_qwc2_config())
 
                     # Create qwc2 file : index.html
                     self.create_tenant_index_file(tenant)
