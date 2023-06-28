@@ -15,7 +15,7 @@ Create a GlobalConfigGenerator config file `globalConfig.json` (see below).
 Configuration
 -------------
 
-Example `tenantConfig.json`:
+Example `globalConfig.json`:
 ```json
 {
   "$schema": "https://github.com/naub1n/qwc-global-config-generator/raw/master/schemas/qwc-global-config-generator.json",
