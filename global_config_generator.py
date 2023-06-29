@@ -155,12 +155,14 @@ class GlobalConfigGenerator:
                 tenant = specific_config.get('tenant', '')
                 if tenant:
                     specific_cfggensrv_data = specific_config.get('config-generator-service', {})
+                    modified_common_cfggensrv_data = self.replace_tenant_template(common_cfggensrv_data, tenant)
+                    modified_common_qwc2config_data = self.replace_tenant_template(common_qwc2config_data, tenant)
                     # Add tenant info
                     specific_cfggensrv_data['config'] = specific_cfggensrv_data.get('config', {})
                     specific_cfggensrv_data['config'].update(tenant=tenant)
                     #Create qwc-config-generator file : tenantConfig.json
                     self.create_tenant_config_file(tenant,
-                                                   common_cfggensrv_data,
+                                                   modified_common_cfggensrv_data,
                                                    specific_cfggensrv_data,
                                                    'tenantConfig.json',
                                                    self.merge_schema_for_config_generator())
@@ -168,7 +170,7 @@ class GlobalConfigGenerator:
                     specific_qwc2config_data = specific_config.get('qwc2config', {})
                     # Create qwc2 file : config.json
                     self.create_tenant_config_file(tenant,
-                                                   common_qwc2config_data,
+                                                   modified_common_qwc2config_data,
                                                    specific_qwc2config_data,
                                                    'config.json',
                                                    self.merge_schema_for_qwc2_config())
@@ -254,4 +256,11 @@ class GlobalConfigGenerator:
             self.logger.error(msg)
             return False
         return True
+
+    def replace_tenant_template(self, json_config, tenant):
+        temp_config = json.dumps(json_config)
+        temp_config = temp_config.replace('%tenant%', tenant)
+        new_config = json.loads(temp_config)
+
+        return new_config
 
