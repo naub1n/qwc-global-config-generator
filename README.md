@@ -102,6 +102,15 @@ Merge schema used is [merge_schema_for_qwc2_config.json](schemas/merge_schema_fo
 Default strategy:
 * No strategy used
 
+### Use template to add tenant name
+
+GlobalConfigGenerator use a template value to add tenant fo each value in globalConfig.json file.
+Add `%tenant%` value in common configuration. 
+
+`%tenant%` will be replaced by tenant name for each item in specific configuration.
+Then, GlobalConfigGenerator apply schema rules.
+
+
 What should I do ?
 -----
 1. Create a `globalConfig.json` file in root of `config-in` directory.
