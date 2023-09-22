@@ -195,9 +195,19 @@ class GlobalConfigGenerator:
                     self.config_generator_service_url,
                     "generate_configs?tenant=" + tenant))
 
+            fail_msg = "Unable to generate service configurations for tenant '%s' : \n   %s" % (
+                tenant, str(response.text).replace('\n', '\n   '))
+
             if 'CRITICAL' in response.text:
-                msg = "Unable to generate service configurations for tenant '%s' : \n%s" % (tenant, str(response.text))
+                msg = fail_msg
+                self.logger.critical(msg)
+            elif 'ERROR' in response.text:
+                msg = fail_msg
                 self.logger.error(msg)
+            elif 'WARNING' in response.text:
+                msg = "Config files and permissions generated for tenant '%s' with warnings : \n   %s" % (
+                    tenant, str(response.text).replace('\n', '\n   '))
+                self.logger.warning(msg)
             else:
                 msg = "Config files and permissions generated for tenant '%s'." % tenant
                 self.logger.info(msg)
