@@ -198,7 +198,7 @@ class GlobalConfigGenerator:
             fail_msg = "Unable to generate service configurations for tenant '%s' : \n   %s" % (
                 tenant, str(response.text).replace('\n', '\n   '))
 
-            if 'CRITICAL' in response.text:
+            if 'CRITICAL' in response.text or 'Python Exception' in response.text:
                 msg = fail_msg
                 self.logger.critical(msg)
             elif 'ERROR' in response.text:
